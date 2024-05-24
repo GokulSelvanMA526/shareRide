@@ -18,4 +18,14 @@ buildscript {
     }
 }
 
-apply plugin: "com.facebook.react.rootproject"
+allprojects {
+    project.pluginManager.withPlugin("com.facebook.react") {
+        react {
+            reactNativeDir = rootProject.file("../node_modules/react-native/")
+        }
+    }
+    repositories {
+        google()
+        maven { url 'https://www.jitpack.io' }
+    }
+}
