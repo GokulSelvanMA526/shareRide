@@ -21,14 +21,12 @@ create an AppNavigator component that will be used in the App component with the
 
 const AppNavigator = ({initialPage}: AppProps) => {
   return (
-    <>
-      <Stack.Navigator
-        initialRouteName={initialPage}
-        screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
-    </>
+    <Stack.Navigator
+      initialRouteName={initialPage}
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Login" component={Login} />
+    </Stack.Navigator>
   );
 };
 

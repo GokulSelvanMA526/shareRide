@@ -99,6 +99,7 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
+import {navigate} from '../../navigation/RootNavigator';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import Icon from '../../components/Icon';
 // import {MaterialIcon} from '../../components/Micon';
@@ -126,6 +127,14 @@ const Login = () => {
     if (typeof email !== 'string' || typeof password !== 'string') {
       setError('Email and password must be strings');
       setLoading(false);
+      return;
+    }
+
+    // if username and password is admin, admin then show success message and redirect to home page
+    if (email === 'admin' && password === 'admin') {
+      setSuccess('Login successful');
+      setLoading(false);
+      navigate('Home');
       return;
     }
 
