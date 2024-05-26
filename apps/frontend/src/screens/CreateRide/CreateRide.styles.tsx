@@ -44,11 +44,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'lightgrey',
+    padding: 6,
   },
   formContainer: {
-    width: '80%',
+    width: '98%',
     padding: 10,
     backgroundColor: 'white',
+    borderRadius: 5,
   },
   input: {
     borderWidth: 1,

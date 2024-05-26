@@ -224,19 +224,26 @@ use the following data for error message:
 
 */
 
-import React, {useState} from 'react';
-import {View, Text, TextInput, Button, ScrollView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import DatePicker from '@react-native-community/datetimepicker';
-import TimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
-// import styles from './CreateRide.styles';
+
+import DatePicker from 'react-native-date-picker';
 import styles from './CreateRide.styles';
+import {Appbar, Text as PaperText} from 'react-native-paper';
+import {navigate} from '../../navigation/RootNavigator';
 
 const CreateRide = ({navigation, route}) => {
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
-  const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [seats, setSeats] = useState(1);
   const [typeOfVehicle, setTypeOfVehicle] = useState('car');
@@ -246,6 +253,12 @@ const CreateRide = ({navigation, route}) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const currentDate = new Date();
+
+  const twoDaysLater = new Date();
+  twoDaysLater.setDate(currentDate.getDate() + 2);
 
   const someParameter = route.params;
   console.log('someParameter', someParameter);
@@ -276,6 +289,10 @@ const CreateRide = ({navigation, route}) => {
     {label: 'bmw', value: 'bmw'},
     {label: 'audi', value: 'audi'},
   ];
+
+  useEffect(() => {
+    console.log(date, 'date');
+  }, [date]);
 
   // change the vehicleColorData to array of objects with label and value
   //   const formattedVehicleColorData = vehicleModelData.map(color => ({
@@ -326,10 +343,19 @@ const CreateRide = ({navigation, route}) => {
     setSuccess('Ride created successfully');
   };
 
+  const navigateHome = () => {
+    navigate('Home');
+  };
+
   return (
     <ScrollView>
+      <Appbar.Header>
+        <Appbar.BackAction onPress={navigateHome} />
+        <Appbar.Content title="Create Ride" />
+      </Appbar.Header>
       <View style={styles.container}>
         <View style={styles.formContainer}>
+          <PaperText variant="titleMedium">Start</PaperText>
           <View style={styles.input}>
             <Icon name="alarm" size={20} color="black" />
             <TextInput
@@ -338,6 +364,7 @@ const CreateRide = ({navigation, route}) => {
               onChangeText={setSource}
             />
           </View>
+          <PaperText variant="titleMedium">End</PaperText>
           <View style={styles.input}>
             <Icon name="alarm" size={20} color="black" />
             <TextInput
@@ -346,17 +373,30 @@ const CreateRide = ({navigation, route}) => {
               onChangeText={setDestination}
             />
           </View>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            {/* <DatePicker
-            value={new Date()}
-            onChange={(event, date) => setDate(date)}
-          /> */}
-          </View>
-          <View style={styles.input}>
-            <Icon name="time" size={20} color="black" />
-            {/* <TimePicker value={new Date()} onChange={setTime} /> */}
-          </View>
+          <PaperText variant="titleMedium">Date</PaperText>
+          <TouchableOpacity
+            style={{width: 100, height: 50, backgroundColor: 'lightgrey'}}
+            onPress={() => setOpen(true)}>
+            <Text>{date.toLocaleString()}</Text>
+            <DatePicker
+              modal
+              open={open}
+              date={date}
+              onConfirm={date => {
+                console.log(typeof date, date.toLocaleString(), 'date');
+                setOpen(false);
+                setDate(date);
+              }}
+              onCancel={() => {
+                setOpen(false);
+              }}
+              minimumDate={new Date(currentDate)}
+              maximumDate={new Date(twoDaysLater)}
+              minuteInterval={10}
+              dividerColor="blue"
+            />
+          </TouchableOpacity>
+          <PaperText variant="titleMedium">Seats</PaperText>
           <View style={styles.input}>
             <Icon name="alarm" size={20} color="black" />
             <Dropdown
@@ -367,6 +407,7 @@ const CreateRide = ({navigation, route}) => {
               valueField="value"
             />
           </View>
+          <PaperText variant="titleMedium">Type of Vehicle</PaperText>
           <View style={styles.input}>
             <Icon name="alarm" size={20} color="black" />
             <Dropdown
@@ -377,6 +418,7 @@ const CreateRide = ({navigation, route}) => {
               valueField="value"
             />
           </View>
+          <PaperText variant="titleMedium">Vehicle Number</PaperText>
           <View style={styles.input}>
             <Icon name="alarm" size={20} color="black" />
             <TextInput
@@ -385,6 +427,7 @@ const CreateRide = ({navigation, route}) => {
               onChangeText={setVehicleNumber}
             />
           </View>
+          <PaperText variant="titleMedium">Vehicle Color</PaperText>
           <View style={styles.input}>
             <Icon name="alarm" size={20} color="black" />
             <Dropdown
@@ -395,6 +438,7 @@ const CreateRide = ({navigation, route}) => {
               valueField="value"
             />
           </View>
+          <PaperText variant="titleMedium">Start</PaperText>
           <View style={styles.input}>
             <Icon name="alarm" size={20} color="black" />
             <Dropdown
@@ -405,6 +449,7 @@ const CreateRide = ({navigation, route}) => {
               valueField="value"
             />
           </View>
+          <PaperText variant="titleMedium">Vehicle Model</PaperText>
           <View style={styles.input}>
             <Icon name="alarm" size={20} color="black" />
             <Dropdown
