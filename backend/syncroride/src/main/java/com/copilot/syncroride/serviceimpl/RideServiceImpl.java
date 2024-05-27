@@ -62,6 +62,8 @@ public class RideServiceImpl {
         ride.setDestination(rideRequest.getDestination());
         ride.setDate(rideRequest.getDate());
         ride.setSeatsAvailable(rideRequest.getSeatsAvailable());
+        ride.setVehicleType(rideRequest.getVehicleType());
+        ride.setStops(rideRequest.getStops());
         ride.setUser(user);
         return convertToResponse(rideRepository.save(ride));
     }
@@ -80,6 +82,8 @@ public class RideServiceImpl {
             ride.setDestination(rideRequest.getDestination());
             ride.setDate(rideRequest.getDate());
             ride.setSeatsAvailable(rideRequest.getSeatsAvailable());
+            ride.setVehicleType(rideRequest.getVehicleType());
+            ride.setStops(rideRequest.getStops());
             ride.setUser(user);
             return convertToResponse(rideRepository.save(ride));
         });
@@ -103,6 +107,20 @@ public class RideServiceImpl {
         return Optional.empty();
     }
 
+    public List<RideResponse> findRidesByOriginAndDestination(String origin, String destination) {
+        return rideRepository.findByOriginAndDestination(origin, destination)
+            .stream()
+            .map(this::convertToResponse)
+            .collect(Collectors.toList());
+    }
+
+    public List<RideResponse> findRidesByStops(String stop) {
+        return rideRepository.findByStopsContaining(stop)
+            .stream()
+            .map(this::convertToResponse)
+            .collect(Collectors.toList());
+    }
+
 
     private RideResponse convertToResponse(Ride ride) {
         RideResponse response = new RideResponse();
@@ -114,6 +132,8 @@ public class RideServiceImpl {
         response.setUserId(ride.getUser().getId());
         response.setUserName(ride.getUser().getName());
         response.setUserEmail(ride.getUser().getEmail());
+        response.setVehicleType(ride.getVehicleType());
+        response.setStops(ride.getStops());
         return response;
     }
 }

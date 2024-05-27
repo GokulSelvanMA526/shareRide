@@ -97,6 +97,12 @@ paths:
   /syncroride/api/rides/{rideId}/join:
     parameters:
     - $ref: '#/components/parameters/rideId'
+    - name: userId
+      in: query
+      description: Id of the user
+      required: true
+      schema:
+        type: string
     post:
       operationId: joinRide
       tags:
@@ -122,6 +128,63 @@ paths:
       tags:
         - SyncroRide v1
       summary: Retrieve all rides
+      description: .
+      responses:
+        '200':
+          $ref: '#/components/responses/RideResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/JWTValidationError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /syncroride/api/rides/search:
+    parameters:
+      - name: origin
+        in: query
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      - name: destination
+        in: query
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: findRidesByOriginAndDestination
+      tags:
+        - SyncroRide v1
+      summary: Find Rides By Origin And Destination
+      description: .
+      responses:
+        '200':
+          $ref: '#/components/responses/RideResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/JWTValidationError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /syncroride/api/rides/searchByStop:
+    parameters:
+      - name: stop
+        in: query
+        description: PickUp stop
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: findRidesByStops
+      tags:
+        - SyncroRide v1
+      summary: Search by stop/pick up location and get all Ride Details
       description: .
       responses:
         '200':

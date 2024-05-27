@@ -21,6 +21,25 @@ public class UserServiceImpl {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+
+    /**
+     * Handles user signup.
+     *
+     * @param signUpRequest the signup request containing user details
+     * @return message containing user registration is success
+     */
+
+    public String addUser(SignUpRequest signUpRequest) {
+        User user = new User();
+        user.setName(signUpRequest.getName());
+        user.setEmail(signUpRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setPhoneNumber(signUpRequest.getPhoneNumber());
+        user.setGender(signUpRequest.getGender());
+        userRepository.save(user);
+        return "Successfully registered";
+    }
+
     /**
      * Handles user login.
      *
@@ -40,21 +59,4 @@ public class UserServiceImpl {
     }
 
 
-    /**
-     * Handles user signup.
-     *
-     * @param signUpRequest the signup request containing user details
-     * @return message containing user registration is success
-     */
-
-    public String addUser(SignUpRequest signUpRequest) {
-        User user = new User();
-        user.setName(signUpRequest.getName());
-        user.setEmail(signUpRequest.getEmail());
-        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
-        user.setPhoneNumber(signUpRequest.getPhoneNumber());
-        user.setGender(signUpRequest.getGender());
-        userRepository.save(user);
-        return "Successfully registered";
-    }
 }

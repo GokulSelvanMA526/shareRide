@@ -89,4 +89,25 @@ public class RideController {
         Optional<RideResponse> updatedRide = rideService.updateRide(id, rideDetails);
         return updatedRide.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    /**
+     * find Rides By Origin And Destination
+     * origin - pick up location
+     * destination - drop location
+     * @return all the ride's response
+     */
+    @GetMapping("/search")
+    public ResponseEntity<List<RideResponse>> findRidesByOriginAndDestination(@RequestParam String origin, @RequestParam String destination) {
+        return ResponseEntity.ok(rideService.findRidesByOriginAndDestination(origin, destination));
+    }
+
+    /**
+     * search Rides By Stop Names
+     * stop - pick up stop name
+     * @return all the ride's response
+     */
+    @GetMapping("/searchByStop")
+    public ResponseEntity<List<RideResponse>> findRidesByStops(@RequestParam String stop) {
+        return ResponseEntity.ok(rideService.findRidesByStops(stop));
+    }
 }

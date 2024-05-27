@@ -9,12 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Entity class to store user details.
  * Represents a user in the commute-sharing application.
  */
-@Entity
+//@Entity
+@Document
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
