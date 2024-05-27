@@ -52,6 +52,13 @@ const Home = () => {
     navigate('CreateRide', {selectedValue, isReversed});
   };
 
+  // create  a function to navigate to the FindRide screen when the find ride button is pressed and pass the selected dropdown value as a parameter
+  const handleFindRidePress = (selectedLocaitonValue: string) => {
+    console.log(selectedLocaitonValue, 'selectedValue from function');
+    const selectedValue = selectedLocaitonValue; // Declare the selectedValue variable
+    navigate('FindRide', {selectedValue, isReversed});
+  };
+
   return (
     <View style={{backgroundColor: '#fff'}}>
       <Appbar.Header>
@@ -141,7 +148,7 @@ const Home = () => {
           mode="contained"
           style={{margin: 10}}
           contentStyle={{height: 50}}
-          onPress={() => console.log('Find Ride pressed')}>
+          onPress={() => handleFindRidePress(value)}>
           Find Ride
         </Button>
         <Button

@@ -377,7 +377,6 @@ const CreateRide = ({navigation, route}) => {
           <TouchableOpacity
             style={{width: 100, height: 50, backgroundColor: 'lightgrey'}}
             onPress={() => setOpen(true)}>
-            <Text>{date.toLocaleString()}</Text>
             <DatePicker
               modal
               open={open}
