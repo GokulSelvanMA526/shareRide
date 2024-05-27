@@ -1,0 +1,443 @@
+openapi: 3.0.3
+info:
+  title: syncroride
+  description: .
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8070'
+    description: Local server for testing locally
+paths:
+  /syncroride/api/users/register:
+    parameters:
+    #- $ref: '#/components/parameters/pathIdentityId'
+    post:
+      operationId: signUp
+      tags:
+        - SyncroRide v1
+      summary: Register a New User
+      description: .
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/signUpRequest'
+            examples:
+              signUpRequest:
+                $ref: '#/components/examples/signUpRequest'
+      responses:
+        '201':
+          description: User successfully registered.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/JWTValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/DownstreamServiceUnavailable'
+  /syncroride/api/users/login:
+    parameters:
+    #- $ref: '#/components/parameters/pathIdentityId'
+    post:
+      operationId: login
+      tags:
+        - SyncroRide v1
+      summary:  Login Existing User
+      description: .
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginRequest'
+            examples:
+              loginRequest:
+                $ref: '#/components/examples/loginRequest'
+      responses:
+        '201':
+          description: Logged in successfully.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/JWTValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/DownstreamServiceUnavailable'
+  /syncroride/api/rides/create:
+    parameters:
+      #- $ref: '#/components/parameters/pathIdentityId'
+    post:
+      operationId: createRide
+      tags:
+        - SyncroRide v1
+      summary: Create Ride at Rider/Driver's Login
+      description: .
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/rideRequest'
+            examples:
+              rideRequest:
+                $ref: '#/components/examples/rideRequest'
+      responses:
+        '201':
+          description: Ride successfully created and sent to the given target
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/JWTValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/DownstreamServiceUnavailable'
+  /syncroride/api/rides/{rideId}/join:
+    parameters:
+    - $ref: '#/components/parameters/rideId'
+    post:
+      operationId: joinRide
+      tags:
+        - SyncroRide v1
+      summary: Join a Ride
+      description: .
+      responses:
+        '201':
+          description: Ride successfully created and sent to the given target
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/JWTValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/DownstreamServiceUnavailable'
+  /syncroride/api/rides:
+    parameters:
+     # - $ref: '#/components/parameters/pathIdentityId'
+    get:
+      operationId: getAllRides
+      tags:
+        - SyncroRide v1
+      summary: Retrieve all rides
+      description: .
+      responses:
+        '200':
+          $ref: '#/components/responses/RideResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/JWTValidationError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /syncroride/api/rides/{id}:
+    parameters:
+     - $ref: '#/components/parameters/id'
+    get:
+      operationId: getRideById
+      tags:
+        - SyncroRide v1
+      summary: Retrieve a ride by ID
+      description: .
+      responses:
+        '200':
+          $ref: '#/components/responses/RideResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/JWTValidationError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /syncroride/api/rides/update/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    put:
+      operationId: updateRide
+      tags:
+        - SyncroRide v1
+      summary: Update an existing ride
+      description: .
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/rideRequest'
+            examples:
+              rideRequest:
+                $ref: '#/components/examples/rideRequest'
+      responses:
+        '200':
+          description: The ride has been successfully updated for the specified user
+        '201':
+          description: The ride has been successfully updated for the specified user
+
+components:
+  parameters:
+    rideId:
+      name: rideId
+      in: path
+      description: Ride Id, Uniquely identifies the user.
+      required: true
+      schema:
+        type: string
+      example: "234"
+    id:
+      name: id
+      in: path
+      description:  Uniquely identifies the user.
+      required: true
+      schema:
+        type: string
+      example: "123"
+  schemas:
+    rideRequest:
+      type: object
+      required:
+        - origin
+        - destination
+        - date
+        - seatsAvailable
+        - userId
+      properties:
+        origin:
+          type: string
+          example: "Tambaram"
+        destination:
+          type: string
+          example: "CIEC"
+        date:
+          type: string
+          example: "2024-05-30"
+        seatsAvailable:
+          type: int
+          example: 3
+        userId:
+          type: Long
+          example: 101
+    signUpRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - phoneNumber
+        - gender
+      properties:
+        name:
+          type: string
+          example: "Akash"
+        email:
+          type: string
+          example: "akash@comcast.com"
+        password:
+          type: string
+          example: "*****"
+        phoneNumber:
+          type: string
+          example: "+91 9557189953"
+        gender:
+          type: string
+          example: "Male"
+    loginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: "akash@comcast.com"
+        password:
+          type: string
+          example: "*****"
+
+    errorResponse:
+      description: Error Response
+      type: object
+      required:
+        - timestamp
+        - status
+        - error
+        - message
+      properties:
+        timestamp:
+          type: string
+        status:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+      example:
+        timestamp: '2023-06-13T07:31:53.319+00:00'
+        status: 500
+        error: 'Internal Server Error'
+        message: 'Internal Server Error'
+    rideResponse:
+      type: object
+      required:
+        - id
+        - origin
+        - destination
+        - date
+        - seatsAvailable
+        - userId
+        - userName
+        - userEmail
+      properties:
+        id:
+          type: Long
+          example: 1
+        origin:
+          type: string
+          example: "Tambaram"
+        destination:
+          type: string
+          example: "CIEC"
+        date:
+          type: string
+          example: "2024-05-30"
+        seatsAvailable:
+          type: int
+          example: 3
+        userId:
+          type: Long
+          example: 101
+        userName:
+          type: string
+          example: "Ravi"
+        userEmail:
+          type: string
+          example: "ravi@comcast.com"
+
+  responses:
+    RideResponse:
+      description: Ride Response with status code and a response body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/rideResponse'
+          examples:
+            rideResponse:
+              $ref: '#/components/examples/rideResponse'
+    ErrorResponse:
+      description: Response with status code and a message detailing the error that has occurred
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            timestamp: '2023-06-13T07:31:53.319+00:00'
+            status: 500
+            error: 'Internal Server Error'
+            message: 'Internal Server Error'
+
+    InternalServerError:
+      description: An Internal Server error has occurred
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            timestamp: '2023-06-13T07:31:53.319+00:00'
+            status: 500
+            error: 'Internal Server Error'
+            message: 'Internal Server Error'
+
+    BadRequest:
+      description: The user has sent an invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            timestamp: '2023-06-13T07:31:53.319+00:00'
+            status: 400
+            error: 'Bad Request'
+            message: 'Bad Request'
+
+    NotFound:
+      description: The ride details provided is incorrect or has expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            timestamp: '2023-06-13T07:31:53.319+00:00'
+            status: 404
+            error: 'Not Found'
+            message: 'Not Found'
+
+    JWTValidationError:
+      description: JWT Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            timestamp: '2023-06-13T07:31:53.319+00:00'
+            status: 403
+            error: 'JWT Validation Error'
+            message: 'JWT Validation error'
+
+    DownstreamServiceUnavailable:
+      description: Downstream Services are not available
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            timestamp: '2023-06-13T07:31:53.319+00:00'
+            status: 429
+            error: 'Downstream Service Unavailable'
+            message: 'Downstream Services are not available'
+
+  examples:
+    rideRequest:
+      value: |
+        {
+          "origin": "Tambaram",
+          "destination": "CIEC",
+          "date": "2024-05-30",
+          "seatsAvailable": 3,
+          "userId": 101
+        }
+    signUpRequest:
+      value: |
+        {
+          "origin": "Tambaram",
+          "destination": "CIEC",
+          "date": "2024-05-30",
+          "seatsAvailable": 3,
+          "userId": 101
+        }
+    loginRequest:
+      value: |
+        {
+          "origin": "Tambaram",
+          "destination": "CIEC",
+          "date": "2024-05-30",
+          "seatsAvailable": 3,
+          "userId": 101
+        }
+    rideResponse:
+      value: |
+        {
+          "id": 1,
+          "origin": "Tambaram",
+          "destination": "CIEC",
+          "date": "2024-05-30",
+          "seatsAvailable": 3,
+          "userId": 101,
+          "userName": "Ravi",
+          "userEmail": "ravi@comcast.com"
+        }
