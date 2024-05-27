@@ -3,6 +3,9 @@ import React from 'react';
 import Home from '../screens/Home/Home';
 import type {RootStackParamList, ScreenName} from '../types/types';
 import Login from '../screens/Login/Login';
+import CreateRide from '../screens/CreateRide/CreateRide';
+import FindRide from '../screens/FindRide/FindRide';
+import JoinRide from '../screens/JoinRide/JoinRide';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 interface AppProps {
@@ -26,6 +29,9 @@ const AppNavigator = ({initialPage}: AppProps) => {
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="CreateRide" component={CreateRide} />
+      <Stack.Screen name="FindRide" component={FindRide} />
+      <Stack.Screen name="JoinRide" component={JoinRide} />
     </Stack.Navigator>
   );
 };
