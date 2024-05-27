@@ -95,11 +95,11 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
 import {navigate} from '../../navigation/RootNavigator';
+import {Button} from 'react-native-paper';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import Icon from '../../components/Icon';
 // import {MaterialIcon} from '../../components/Micon';
@@ -176,8 +176,14 @@ const Login = () => {
         {error ? <Text style={styles.error}>{error}</Text> : null}
         {success ? <Text style={styles.success}>{success}</Text> : null}
         {loading ? <ActivityIndicator size="small" color="blue" /> : null}
-        <Button title="Login" onPress={handleLogin} />
-        <Button title="Signup" onPress={() => {}} />
+        {/* <Button title="Login" onPress={handleLogin} /> */}
+        <Button
+          style={{marginVertical: 5}}
+          mode="contained"
+          onPress={handleLogin}>
+          Login
+        </Button>
+        <Button mode="contained">Sign Up</Button>
       </View>
     </View>
   );

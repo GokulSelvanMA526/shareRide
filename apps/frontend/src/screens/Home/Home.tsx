@@ -56,6 +56,7 @@ const Home = () => {
     <View style={{backgroundColor: '#fff'}}>
       <Appbar.Header>
         <Appbar.Content title="Home" />
+        <Appbar.Action icon="dots-vertical" onPress={() => {}} />
       </Appbar.Header>
       <View style={styles.searchArea}>
         {!isReversed ? (

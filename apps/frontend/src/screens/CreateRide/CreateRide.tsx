@@ -229,10 +229,10 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import {Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Dropdown} from 'react-native-element-dropdown';
 
@@ -460,7 +460,9 @@ const CreateRide = ({navigation, route}) => {
               valueField="value"
             />
           </View>
-          <Button title="Create Ride" onPress={createRide} />
+          <Button mode="contained" onPress={createRide}>
+            Create Ride
+          </Button>
           {error ? <Text style={styles.error}>{error}</Text> : null}
           {success ? <Text style={styles.success}>{success}</Text> : null}
           {loading ? <Text style={styles.loading}>Loading...</Text> : null}
