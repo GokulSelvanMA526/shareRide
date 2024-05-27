@@ -2,6 +2,9 @@ package com.copilot.propelpace.model;
 
 import lombok.Data;
 
+/**
+ * Data Transfer Object for user signup requests.
+ */
 @Data
 public class SignUpRequest {
     private String name;

@@ -2,6 +2,9 @@ package com.copilot.propelpace.model;
 
 import lombok.Data;
 
+/**
+ * Data Transfer Object for ride responses.
+ */
 @Data
 public class RideResponse {
     private Long id;

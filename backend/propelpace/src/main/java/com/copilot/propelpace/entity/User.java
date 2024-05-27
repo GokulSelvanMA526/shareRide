@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Entity class to store user details.
+ * Represents a user in the commute-sharing application.
  */
 @Entity
 @Data
@@ -21,6 +22,9 @@ import lombok.NoArgsConstructor;
 //@Table(name = "user")
 public class User {
 
+    /**
+     * The unique identifier for the user.
+     */
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

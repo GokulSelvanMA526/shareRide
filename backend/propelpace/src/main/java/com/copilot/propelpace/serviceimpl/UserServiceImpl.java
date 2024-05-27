@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * This service class contains methods of user service functionality like signUp, login and saving
+ * user details.
+ */
 @Service
 public class UserServiceImpl {
     @Autowired
@@ -16,6 +20,13 @@ public class UserServiceImpl {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    /**
+     * Handles user login.
+     *
+     * @param loginRequest the login request containing email and password
+     * @return a message containing user's login is success, or error message if login failed
+     */
 
     public String login(LoginRequest loginRequest) {
         Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
@@ -27,6 +38,14 @@ public class UserServiceImpl {
         }
         return "User Details Does Not Exist";
     }
+
+
+    /**
+     * Handles user signup.
+     *
+     * @param signUpRequest the signup request containing user details
+     * @return message containing user registration is success
+     */
 
     public String addUser(SignUpRequest signUpRequest) {
         User user = new User();

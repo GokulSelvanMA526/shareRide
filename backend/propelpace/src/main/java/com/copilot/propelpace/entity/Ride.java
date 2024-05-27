@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Entity class to store ride details
+ * Represents a ride in the commute-sharing application.
  */
 @Entity
 @Data

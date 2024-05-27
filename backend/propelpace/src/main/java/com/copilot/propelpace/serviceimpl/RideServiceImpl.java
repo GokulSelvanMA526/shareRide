@@ -15,6 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import org.springframework.util.ObjectUtils;
 
+
+/**
+ * This service class contains methods performing rider service  functionality like creating, updating and joining
+ * ride details.
+ */
 @Service
 public class RideServiceImpl {
     @Autowired
@@ -23,14 +28,33 @@ public class RideServiceImpl {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Gets all rides.
+     *
+     * @return a list of all rides
+     */
+
     public List<RideResponse> getAllRides() {
         return rideRepository.findAll().stream().map(this::convertToResponse).collect(Collectors.toList());
     }
 
+
+    /**
+     * Gets a ride by its ID.
+     *
+     * @param id the ID of the ride
+     * @return an Optional containing the ride's response, or empty if not found
+     */
     public Optional<RideResponse> getRideById(Long id) {
         return rideRepository.findById(id).map(this::convertToResponse);
     }
 
+    /**
+     * Adds a new ride.
+     *
+     * @param rideRequest the request containing ride details
+     * @return the created ride's response
+     */
     public RideResponse addRide(RideRequest rideRequest) {
         User user = userRepository.findById(rideRequest.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
         Ride ride = new Ride();
@@ -41,6 +65,13 @@ public class RideServiceImpl {
         ride.setUser(user);
         return convertToResponse(rideRepository.save(ride));
     }
+    /**
+     * Updates an existing ride.
+     *
+     * @param rideRequest the request containing ride details
+     * @param id - the ID of the ride
+     * @return the updated ride's response
+     */
 
     public Optional<RideResponse> updateRide(Long id, RideRequest rideRequest) {
         return rideRepository.findById(id).map(ride -> {
@@ -54,6 +85,13 @@ public class RideServiceImpl {
         });
     }
 
+    /**
+     * Joins an existing ride.
+     *
+     * @param rideId - the ID of the ride
+     * @param userId - the ID of the user
+     * @return the ride's response
+     */
     public Optional<RideResponse> joinRide(Long rideId, Long userId) {
         Ride ride = rideRepository.findById(rideId).orElseThrow(() -> new RuntimeException("Ride not found"));
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));

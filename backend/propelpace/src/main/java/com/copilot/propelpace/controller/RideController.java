@@ -30,11 +30,22 @@ public class RideController {
     @Autowired
     private RideServiceImpl rideService;
 
+    /**
+     * fetch all ride details
+     */
+
     @GetMapping
     public ResponseEntity<List<RideResponse>> getAllRides() {
         List<RideResponse> rides = rideService.getAllRides();
         return ResponseEntity.ok(rides);
     }
+
+    /**
+     * fetch ride details by id
+     * id will provide - unique identifier
+     * @param id
+     * @return
+     */
 
     @GetMapping("/{id}")
     public ResponseEntity<RideResponse> getRideById(@PathVariable Long id) {
@@ -42,16 +53,36 @@ public class RideController {
         return ride.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    /**
+     * create rideRequest details
+     * @param rideRequest
+     * @return the ride's response
+     */
+
     @PostMapping("/create")
-    public ResponseEntity<RideResponse> createRide(@RequestBody RideRequest ride) {
-        RideResponse savedRide = rideService.addRide(ride);
+    public ResponseEntity<RideResponse> createRide(@RequestBody RideRequest rideRequest) {
+        RideResponse savedRide = rideService.addRide(rideRequest);
         return ResponseEntity.ok(savedRide);
     }
+    /**
+     * join ride details data
+     * userId - id of an user
+     * rideId - id of the ride
+     * @return the ride's response
+     */
+
     @PostMapping("/{rideId}/join")
     public ResponseEntity<RideResponse> joinRide(@PathVariable Long rideId, @RequestParam Long userId) {
         Optional<RideResponse> joinedRide = rideService.joinRide(rideId, userId);
         return joinedRide.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
     }
+
+    /**
+     * update ride details
+     * id - id of the ride
+     * rideDetails - provide all the details of ride
+     * @return the ride's response
+     */
 
     @PutMapping("/update/{id}")
     public ResponseEntity<RideResponse> updateRide(@PathVariable Long id, @RequestBody RideRequest rideDetails) {
