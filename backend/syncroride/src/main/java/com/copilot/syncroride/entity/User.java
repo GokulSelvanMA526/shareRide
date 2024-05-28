@@ -15,20 +15,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * Entity class to store user details.
  * Represents a user in the commute-sharing application.
  */
-//@Entity
-@Document
+
+@Document(collection = "user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@Table(name = "user")
 public class User {
 
     /**
      * The unique identifier for the user.
      */
     @Id
-    @Column(nullable = false)
+   // @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

@@ -7,12 +7,11 @@ import com.copilot.syncroride.model.RideRequest;
 import com.copilot.syncroride.model.RideResponse;
 import com.copilot.syncroride.repository.RideRepository;
 import com.copilot.syncroride.repository.UserRepository;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import org.springframework.util.ObjectUtils;
 
 
@@ -67,11 +66,12 @@ public class RideServiceImpl {
         ride.setUser(user);
         return convertToResponse(rideRepository.save(ride));
     }
+
     /**
      * Updates an existing ride.
      *
      * @param rideRequest the request containing ride details
-     * @param id - the ID of the ride
+     * @param id          - the ID of the ride
      * @return the updated ride's response
      */
 

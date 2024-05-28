@@ -20,13 +20,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * Entity class to store ride details
  * Represents a ride in the commute-sharing application.
  */
-//@Entity
-@Document
+
+@Document(collection = "ride")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@Table(name = "ride")
 public class Ride {
 
     @Id
