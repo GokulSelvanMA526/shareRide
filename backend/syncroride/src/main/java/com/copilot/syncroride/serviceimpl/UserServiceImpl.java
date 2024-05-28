@@ -31,7 +31,7 @@ public class UserServiceImpl {
             user.setName(signUpRequest.getName());
             user.setEmail(signUpRequest.getEmail());
             user.setPassword((signUpRequest.getPassword()));
-            user.setPhoneNumber(signUpRequest.getPhoneNumber());
+            user.setPhoneNumber(signUpRequest.getMobileNumber());
             user.setGender(signUpRequest.getGender());
             userRepository.save(user);
             return "Successfully registered";
