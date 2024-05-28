@@ -17,7 +17,6 @@ public class UserServiceImpl {
     @Autowired
     private UserRepository userRepository;
 
-
     /**
      * Handles user signup.
      *
@@ -47,10 +46,8 @@ public class UserServiceImpl {
         Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-//            if ((loginRequest.getPassword(), user.getPassword()) {
-//                return "LoggedIn Successfully";
-//            }
-        }
+            return "LoggedIn Successfully";
+         }
         return "User Details Does Not Exist";
     }
 
