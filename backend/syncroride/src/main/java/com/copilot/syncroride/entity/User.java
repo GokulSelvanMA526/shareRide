@@ -1,13 +1,14 @@
 package com.copilot.syncroride.entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Entity class to store user details.
@@ -20,11 +21,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 // @Builder from the Lombok library. These annotations automatically generate getters and setters,
 // a constructor with all arguments, a no-argument constructor, and
 // a builder method for the User class, respectively.
-@Document(collection = "user")
+@Table(name = "user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class User {
 
     /**

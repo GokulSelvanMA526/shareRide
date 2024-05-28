@@ -6,6 +6,7 @@ import com.copilot.syncroride.model.SignUpRequest;
 import com.copilot.syncroride.repository.UserRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,14 +26,19 @@ public class UserServiceImpl {
      */
 
     public String addUser(SignUpRequest signUpRequest) {
-        User user = new User();
-        user.setName(signUpRequest.getName());
-        user.setEmail(signUpRequest.getEmail());
-        user.setPassword((signUpRequest.getPassword()));
-        user.setPhoneNumber(signUpRequest.getPhoneNumber());
-        user.setGender(signUpRequest.getGender());
-        userRepository.save(user);
-        return "Successfully registered";
+        try {
+            User user = new User();
+            user.setName(signUpRequest.getName());
+            user.setEmail(signUpRequest.getEmail());
+            user.setPassword((signUpRequest.getPassword()));
+            user.setPhoneNumber(signUpRequest.getPhoneNumber());
+            user.setGender(signUpRequest.getGender());
+            userRepository.save(user);
+            return "Successfully registered";
+        } catch (DuplicateKeyException e) {
+            // Handle duplicate key error
+            return "A user with this ID already exists.";
+        }
     }
 
     /**
@@ -47,7 +53,7 @@ public class UserServiceImpl {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             return "LoggedIn Successfully";
-         }
+        }
         return "User Details Does Not Exist";
     }
 

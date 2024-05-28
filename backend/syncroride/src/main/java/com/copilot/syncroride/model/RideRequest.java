@@ -1,5 +1,6 @@
 package com.copilot.syncroride.model;
 
+import com.copilot.syncroride.validation.ValidCIECChennaiLocation;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,6 +12,12 @@ import lombok.Data;
 /**
  * Data Transfer Object for ride creation requests.
  */
+
+//  the @ValidCIECChennaiLocation annotation is used to add the custom validation to the RideRequest class.
+//  This annotation will validate that either the origin or the destination is "CIEC Chennai".
+//  Now, when a user tries to create a ride where neither the origin nor the destination is "CIEC Chennai",
+//  they will receive an error message.
+@ValidCIECChennaiLocation
 @Data
 public class RideRequest {
 

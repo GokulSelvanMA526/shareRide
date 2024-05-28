@@ -7,8 +7,10 @@ import com.copilot.syncroride.model.RideRequest;
 import com.copilot.syncroride.model.RideResponse;
 import com.copilot.syncroride.repository.RideRepository;
 import com.copilot.syncroride.repository.UserRepository;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +40,6 @@ public class RideServiceImpl {
     // The getAllRides method retrieves all rides from the database, converts each ride to a RideResponse object, and
     // returns a list of these objects.
     // The conversion is done by the convertToResponse method.
-
     public List<RideResponse> getAllRides() {
         return rideRepository.findAll().stream().map(this::convertToResponse).collect(Collectors.toList());
     }
@@ -77,7 +78,6 @@ public class RideServiceImpl {
      * @param id          - the ID of the ride
      * @return the updated ride's response
      */
-
     public Optional<RideResponse> updateRide(Long id, RideRequest rideRequest) {
         return rideRepository.findById(id).map(ride -> {
             User user = userRepository.findById(rideRequest.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
@@ -110,15 +110,40 @@ public class RideServiceImpl {
         return Optional.empty();
     }
 
-    // The findRidesByOriginAndDestination and findRidesByStops methods retrieve rides
-    // based on their origin and destination, and stops, respectively.
+    // The findRidesByOriginAndDestination
+    // method finds rides by origin and destination.
+    // It retrieves direct rides that match the origin and destination,
+    // as well as rides that have stops matching the origin and destination.
+    // It returns a list of RideResponse objects that match the search criteria.
+    // The method uses the findByOriginAndDestination, findByOrigin, and findByDestination methods of RideRepository
+    // to fetch the rides.
+    // It then uses the convertToResponse method to convert the Ride objects to RideResponse objects.
     public List<RideResponse> findRidesByOriginAndDestination(String origin, String destination) {
-        return rideRepository.findByOriginAndDestination(origin, destination)
-            .stream()
+        List<Ride> directRides = rideRepository.findByOriginAndDestination(origin, destination);
+        Set<Ride> allRides = new HashSet<>(directRides);
+
+        List<Ride> originRides = rideRepository.findByOrigin(origin);
+        List<Ride> destinationRides = rideRepository.findByDestination(destination);
+
+        for (Ride originRide : originRides) {
+            for (Ride destinationRide : destinationRides) {
+                if (originRide.getStops().contains(destinationRide.getOrigin())) {
+                    allRides.add(originRide);
+                    allRides.add(destinationRide);
+                }
+            }
+        }
+        return allRides.stream()
             .map(this::convertToResponse)
             .collect(Collectors.toList());
     }
 
+    // The findRidesByStops method finds rides by stops.
+    // It retrieves rides that have stops matching the search criteria and
+    // returns a list of RideResponse objects that match the search criteria.
+    // The method uses the findByStopsContaining method of RideRepository to fetch the rides.
+    // It then uses the convertToResponse method to convert the Ride objects to RideResponse objects.
+    // The search criteria is provided as a parameter to the method.
     public List<RideResponse> findRidesByStops(String stop) {
         return rideRepository.findByStopsContaining(stop)
             .stream()
@@ -129,7 +154,6 @@ public class RideServiceImpl {
     // The convertToResponse method converts a Ride object to a RideResponse object.
     // It creates a new RideResponse object,
     // sets its properties based on the Ride object, and returns the object.
-
     private RideResponse convertToResponse(Ride ride) {
         RideResponse response = new RideResponse();
         // Set properties of the response...

@@ -2,11 +2,13 @@ package com.copilot.syncroride.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -18,8 +20,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Entity class to store ride details
  * Represents a ride in the commute-sharing application.
- * This class is used to map the Ride objects in the application to documents in a MongoDB collection named ride,
- * as indicated by the @Document(collection = "ride") annotation.
+ * This class is used to map the Ride objects in the application in a MySql Table named ride,
+ * as indicated by the @Table(name = "ride") annotation.
  */
 
 // The Ride class is annotated with @Data, @AllArgsConstructor, @NoArgsConstructor, and
@@ -27,11 +29,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 // These annotations automatically generate getters and setters,
 // a constructor with all arguments, a no-argument constructor, and
 // a builder method for the Ride class, respectively.
-@Document(collection = "ride")
+@Table(name = "ride")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class Ride {
 
     // The id field is annotated with @Id, @Column(nullable = false), and
