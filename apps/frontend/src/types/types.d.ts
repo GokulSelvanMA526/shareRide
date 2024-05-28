@@ -5,6 +5,7 @@ export type RootStackParamList = {
   CreateRide: undefined;
   JoinRide: undefined;
   FindRide: undefined;
+  AddVehicle: undefined;
 };
 
 export type ScreenName = keyof RootStackParamList;

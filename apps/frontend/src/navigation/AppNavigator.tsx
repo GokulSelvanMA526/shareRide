@@ -6,6 +6,7 @@ import Login from '../screens/Login/Login';
 import CreateRide from '../screens/CreateRide/CreateRide';
 import FindRide from '../screens/FindRide/FindRide';
 import JoinRide from '../screens/JoinRide/JoinRide';
+import AddVehicle from '../screens/AddVehicle/AddVehicle';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 interface AppProps {
@@ -32,6 +33,7 @@ const AppNavigator = ({initialPage}: AppProps) => {
       <Stack.Screen name="CreateRide" component={CreateRide} />
       <Stack.Screen name="FindRide" component={FindRide} />
       <Stack.Screen name="JoinRide" component={JoinRide} />
+      <Stack.Screen name="AddVehicle" component={AddVehicle} />
     </Stack.Navigator>
   );
 };

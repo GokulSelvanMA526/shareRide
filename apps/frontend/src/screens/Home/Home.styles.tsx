@@ -65,10 +65,9 @@ const styles = StyleSheet.create({
     zIndex: 1,
     borderBlockColor: 'black',
     borderRadius: 50,
-    backgroundColor: 'teal',
     padding: 5,
   },
-  searchArea: {position: 'relative', marginHorizontal: 6, marginVertical: 10},
+  searchArea: {position: 'relative', marginHorizontal: 6, marginVertical: 2},
 });
 
 export default styles;

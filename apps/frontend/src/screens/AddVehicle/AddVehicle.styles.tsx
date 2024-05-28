@@ -52,13 +52,40 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,
   },
-  input: {
-    borderWidth: 1,
+  outerLayer: {
+    width: '100%',
+    flexDirection: 'row',
+  },
+  vehicleType: {
+    width: 175,
     borderRadius: 5,
-    padding: 10,
     margin: 5,
   },
-  Date: {
+  seats: {
+    width: 175,
+    borderRadius: 5,
+    margin: 5,
+  },
+
+  input: {
+    margin: 5,
+  },
+  dropdown: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+    marginLeft: 5,
+    paddingHorizontal: 5,
+  },
+  textInput: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+    marginLeft: 5,
+    paddingHorizontal: 5,
+  },
+  date: {
     fontSize: 18,
     fontWeight: 'bold',
     color: 'black',

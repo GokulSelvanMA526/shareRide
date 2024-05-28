@@ -271,7 +271,7 @@ use the following data:
 import React, {useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity, ScrollView} from 'react-native';
 import {Appbar, Button, Divider, IconButton} from 'react-native-paper';
-import {Card, Chip} from 'react-native-paper';
+import {Card, Chip, useTheme} from 'react-native-paper';
 import {Dropdown} from 'react-native-element-dropdown';
 import Icon from '../../components/Icon';
 import styles from './FindRide.styles';
@@ -288,6 +288,7 @@ const FindRide = ({route}) => {
   const [selectedFilter, setSelectedFilter] = useState();
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+  const {colors} = useTheme();
 
   const [filters, setFilters] = useState([
     {label: 'Seats', value: 'seats'},
@@ -424,6 +425,7 @@ const FindRide = ({route}) => {
 
   const handleViewRidePress = rideId => {
     // Implement your logic here
+    navigate('JoinRide', {rideId});
   };
 
   const navigateHome = () => {
@@ -453,6 +455,23 @@ const FindRide = ({route}) => {
     });
   };
 
+  const resetAllFilters = () => {
+    setSelectedFiltersData([]);
+    setSelectedDate('');
+    setSelectedVehicle('');
+    setSelectedSeats('');
+    setSelectedGender('');
+  };
+
+  const resetButtonComponent = () => {
+    // create a chip component with the label 'Reset All Filters' and onPress event to reset all filters call the resetAllFilters function
+    return (
+      <Chip style={styles.chips} onClose={() => resetAllFilters()}>
+        Reset All Filters
+      </Chip>
+    );
+  };
+
   return (
     <>
       <Appbar.Header>
@@ -460,7 +479,13 @@ const FindRide = ({route}) => {
         <Appbar.Content title="Find Ride" />
       </Appbar.Header>
       <View style={styles.container}>
-        <View style={styles.searchArea}>
+        <View
+          style={[
+            styles.searchArea,
+            {
+              backgroundColor: colors.primary,
+            },
+          ]}>
           <Dropdown
             style={styles.dropdown}
             data={filters}
@@ -513,9 +538,10 @@ const FindRide = ({route}) => {
             />
           )}
         </View>
-        <View style={styles.filterArea}>
+        <View style={[styles.filterArea, {backgroundColor: colors.primary}]}>
           <Divider />
           {selectedFilterData && renderSelectedFilters()}
+          {selectedFilterData.length > 0 && resetButtonComponent()}
         </View>
         <View style={styles.cardsContainer}>
           <FlatList
