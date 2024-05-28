@@ -162,9 +162,11 @@ public class RideServiceImpl {
         response.setDestination(ride.getDestination());
         response.setDate(ride.getDate());
         response.setSeatsAvailable(ride.getSeatsAvailable());
-        response.setUserId(ride.getUser().getId());
-        response.setUserName(ride.getUser().getName());
-        response.setUserEmail(ride.getUser().getEmail());
+        if (ride.getUser() != null) {
+            response.setUserId(ride.getUser().getId());
+            response.setUserName(ride.getUser().getName());
+            response.setUserEmail(ride.getUser().getEmail());
+        }
         response.setVehicleType(ride.getVehicleType());
         response.setStops(ride.getStops());
         return response;
