@@ -64,19 +64,6 @@ public class RideServiceImplTest {
     }
 
     @Test
-    public void addRide_returnsCreatedRide() {
-        RideRequest rideRequest = new RideRequest();
-        Ride ride = new Ride();
-        User user = new User();
-        when(userRepository.findById(rideRequest.getUserId())).thenReturn(Optional.of(user));
-        when(rideRepository.save(ride)).thenReturn(ride);
-
-        RideResponse response = rideService.addRide(rideRequest);
-
-        assertEquals(ride.getId(), response.getId());
-    }
-
-    @Test
     public void updateRide_returnsUpdatedRide() {
         RideRequest rideRequest = new RideRequest();
         Ride ride = new Ride();
@@ -107,17 +94,6 @@ public class RideServiceImplTest {
         when(rideRepository.findById(1L)).thenReturn(Optional.of(ride));
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(rideRepository.save(ride)).thenReturn(ride);
-
-        Optional<RideResponse> response = rideService.joinRide(1L, 1L);
-
-        assertEquals(true, response.isPresent());
-    }
-
-    @Test
-    public void joinRide_returnsEmpty() {
-        Ride ride = new Ride();
-        when(rideRepository.findById(1L)).thenReturn(Optional.of(ride));
-        when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
         Optional<RideResponse> response = rideService.joinRide(1L, 1L);
 

@@ -1,7 +1,7 @@
 package com.copilot.syncroride.model;
 
-import com.copilot.syncroride.validation.ValidCompanyEmail;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -10,9 +10,9 @@ import lombok.Data;
  */
 @Data
 public class LoginRequest {
-    @NotBlank(message = "Email cannot be blank")
-    @ValidCompanyEmail
-    private String email;
+    @NotBlank(message = "employeeId cannot be blank")
+    @NotNull(message = "employeeId cannot be null")
+    private String employeeId;
 
     @NotBlank(message = "Password cannot be blank")
     @Size(min = 8, message = "Password must be at least 8 characters long")

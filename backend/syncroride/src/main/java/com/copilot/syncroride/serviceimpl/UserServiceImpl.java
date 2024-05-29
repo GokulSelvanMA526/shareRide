@@ -29,7 +29,7 @@ public class UserServiceImpl {
         try {
             User user = new User();
             user.setName(signUpRequest.getName());
-            user.setEmail(signUpRequest.getEmail());
+            user.setEmployeeId(signUpRequest.getEmployeeId());
             user.setPassword((signUpRequest.getPassword()));
             user.setPhoneNumber(signUpRequest.getMobileNumber());
             user.setGender(signUpRequest.getGender());
@@ -49,7 +49,7 @@ public class UserServiceImpl {
      */
 
     public String login(LoginRequest loginRequest) {
-        Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
+        Optional<User> userOptional = userRepository.findByEmployeeId(loginRequest.getEmployeeId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             return "LoggedIn Successfully";

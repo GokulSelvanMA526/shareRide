@@ -1,9 +1,8 @@
 package com.copilot.syncroride.model;
 
 import com.copilot.syncroride.validation.ValidChennaiMobileNumber;
-import com.copilot.syncroride.validation.ValidCompanyEmail;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -17,10 +16,9 @@ public class SignUpRequest {
     @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters")
     private String name;
 
-    @NotBlank(message = "Email cannot be blank")
-    @Email(message = "Email should be valid")
-    @ValidCompanyEmail
-    private String email;
+    @NotBlank(message = "employeeId cannot be blank")
+    @NotNull(message = "employeeId cannot be null")
+    private String employeeId;
 
     @NotBlank(message = "Password cannot be blank")
     @Size(min = 8, message = "Password must be at least 8 characters long")

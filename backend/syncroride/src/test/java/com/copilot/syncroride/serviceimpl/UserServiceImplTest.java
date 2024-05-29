@@ -44,7 +44,7 @@ public class UserServiceImplTest {
         LoginRequest loginRequest = new LoginRequest();
         User user = new User();
         user.setPassword("encodedPassword");
-        when(userRepository.findByEmail(loginRequest.getEmail())).thenReturn(Optional.of(user));
+        when(userRepository.findByEmployeeId(loginRequest.getEmployeeId())).thenReturn(Optional.of(user));
 
         String response = userService.login(loginRequest);
 
@@ -54,7 +54,7 @@ public class UserServiceImplTest {
     @Test
     public void login_returnsErrorMessage() {
         LoginRequest loginRequest = new LoginRequest();
-        when(userRepository.findByEmail(loginRequest.getEmail())).thenReturn(Optional.empty());
+        when(userRepository.findByEmployeeId(loginRequest.getEmployeeId())).thenReturn(Optional.empty());
 
         String response = userService.login(loginRequest);
 

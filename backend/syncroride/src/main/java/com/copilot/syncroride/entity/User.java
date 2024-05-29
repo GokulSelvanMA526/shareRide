@@ -41,7 +41,7 @@ public class User {
     // gender fields represent the name, email, password,
     // phone number, and gender of the user, respectively.
     private String name;
-    private String email;
+    private String employeeId;
     private String password;
     private String phoneNumber;
     private String gender;

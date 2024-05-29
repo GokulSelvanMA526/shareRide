@@ -165,7 +165,7 @@ public class RideServiceImpl {
         if (ride.getUser() != null) {
             response.setUserId(ride.getUser().getId());
             response.setUserName(ride.getUser().getName());
-            response.setUserEmail(ride.getUser().getEmail());
+            response.setEmployeeId(ride.getUser().getEmployeeId());
         }
         response.setVehicleType(ride.getVehicleType());
         response.setStops(ride.getStops());
