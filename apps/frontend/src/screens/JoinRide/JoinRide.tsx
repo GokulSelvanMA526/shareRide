@@ -123,7 +123,7 @@ use the following navigation logic:
 import React, { useState } from 'react';
 */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {Appbar, Button, Card, Divider, Snackbar} from 'react-native-paper';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -132,41 +132,32 @@ import {useTheme} from 'react-native-paper';
 
 import {styles} from './JoinRide.styles';
 
-const rides = [
-  {
-    id: 1,
-    name: 'Ride 1',
-    date: '2022-01-01',
-    seats: 3,
-    vehicle: 'Car',
-    icon: 'car',
-    startLocation: 'Location A',
-    endLocation: 'Location B',
-    startTime: '09:00 AM',
-  },
-  {
-    id: 2,
-    name: 'Ride 2',
-    date: '2022-01-02',
-    seats: 2,
-    vehicle: 'Bike',
-    icon: 'motorcycle',
-    startLocation: 'Location C',
-    endLocation: 'Location D',
-    startTime: '10:00 AM',
-  },
-];
-
 const JoinRide = ({route, navigation}) => {
   const {colors} = useTheme();
-  const {rideId, rideOwner, date} = route.params;
+  // const {rideId = 1, rideOwner, date} = route.params;
+  const rideId = 1;
   const [selectedSeats, setSelectedSeats] = useState(1);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
 
-  const ride = rides.find(r => r.id === rideId);
+  // const ride = rides.find(r => r.id === rideId);
 
   const handleJoinRide = () => {
     setSnackbarVisible(true);
+  };
+
+  // create a ride data with the fields used in this component
+
+  const ride = {
+    rideId: 1,
+    rideOwner: 'John Doe',
+    date: '2022-01-01',
+    seats: 4,
+    vehicle: 'car',
+    icon: 'car',
+    startLocation: 'Tambaram',
+    endLocation: 'CIEC',
+    startTime: '11:00',
+    name: 'Ride 1',
   };
 
   return (
@@ -177,35 +168,29 @@ const JoinRide = ({route, navigation}) => {
       </Appbar.Header>
       <Card style={styles.card}>
         <Card.Title title={ride.name} />
-        <Card.Content>
-          <Dropdown
+        {/* <Card.Content> */}
+        {/* <Dropdown
             label="Seats"
             value={selectedSeats}
             options={[1, 2, 3, 4, 5]}
             onChange={value => setSelectedSeats(value)}
-          />
-          <Text style={styles.cardContent}>
+          /> */}
+        {/* <Text style={styles.cardContent}>
             {ride.startLocation} to {ride.endLocation}
           </Text>
           <Text style={styles.cardContent}>
             {ride.startTime} on {ride.date}
-          </Text>
-        </Card.Content>
-        <Card.Actions>
+          </Text> */}
+        {/* </Card.Content> */}
+        {/* <Card.Actions>
           <View style={styles.cardFooter}>
             <Text style={styles.cardContent}>{ride.vehicle}</Text>
-            <FontAwesome name={ride.icon} size={24} color={colors.primary} />
           </View>
-        </Card.Actions>
+        </Card.Actions> */}
         <Button style={styles.button} onPress={handleJoinRide}>
           <Text style={styles.buttonText}>Join Ride</Text>
         </Button>
       </Card>
-      <Snackbar
-        visible={snackbarVisible}
-        onDismiss={() => setSnackbarVisible(false)}>
-        Ride joined successfully
-      </Snackbar>
     </View>
   );
 };

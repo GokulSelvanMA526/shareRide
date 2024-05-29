@@ -237,11 +237,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Dropdown} from 'react-native-element-dropdown';
 
 import DatePicker from 'react-native-date-picker';
-import styles from './CreateRide.styles';
+import styles from './AddVehicle.styles';
 import {Appbar, Text as PaperText} from 'react-native-paper';
 import {navigate} from '../../navigation/RootNavigator';
 
-const CreateRide = ({navigation, route}) => {
+const AddVehicle = ({navigation, route}) => {
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
   const [time, setTime] = useState('');
@@ -351,120 +351,75 @@ const CreateRide = ({navigation, route}) => {
     <ScrollView>
       <Appbar.Header>
         <Appbar.BackAction onPress={navigateHome} />
-        <Appbar.Content title="Create Ride" />
+        <Appbar.Content title="Add Vehicle" />
       </Appbar.Header>
       <View style={styles.container}>
-        <PaperText variant="titleMedium">
-          Start {} to {}
-        </PaperText>
         <View style={styles.formContainer}>
-          {/* <PaperText variant="titleMedium">
-            Start {} to {}
-          </PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <TextInput
-              placeholder="Source"
-              value={source}
-              onChangeText={setSource}
-            />
+          <View style={styles.outerLayer}>
+            <View style={styles.seats}>
+              <PaperText variant="titleMedium">Seats</PaperText>
+              <Dropdown
+                data={seatsData}
+                value={seats}
+                onChange={setSeats}
+                labelField="label"
+                valueField="value"
+                style={styles.dropdown}
+              />
+            </View>
+            <View style={styles.vehicleType}>
+              <PaperText variant="titleMedium">Type of Vehicle</PaperText>
+              <Dropdown
+                data={typeOfVehicleData}
+                value={typeOfVehicle}
+                onChange={setTypeOfVehicle}
+                labelField="label"
+                valueField="value"
+                style={styles.dropdown}
+              />
+            </View>
           </View>
-          <PaperText variant="titleMedium">End</PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <TextInput
-              placeholder="Destination"
-              value={destination}
-              onChangeText={setDestination}
-            />
-          </View> */}
-          <PaperText variant="titleMedium">Date</PaperText>
-          <TouchableOpacity
-            style={{flex: 1, height: 50, backgroundColor: 'lightgrey'}}
-            onPress={() => setOpen(true)}>
-            {date ? ( // check if date is valid
-              <Text style={styles.Date}>{date.toLocaleString()}</Text>
-            ) : null}
-            <DatePicker
-              modal
-              open={open}
-              date={date}
-              onConfirm={date => {
-                console.log(typeof date, date.toLocaleString(), 'date');
-                setOpen(false);
-                setDate(date);
-              }}
-              onCancel={() => {
-                setOpen(false);
-              }}
-              minimumDate={new Date(currentDate)}
-              maximumDate={new Date(twoDaysLater)}
-              minuteInterval={10}
-              dividerColor="blue"
-            />
-          </TouchableOpacity>
-          <PaperText variant="titleMedium">Seats</PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <Dropdown
-              data={seatsData}
-              value={seats}
-              onChange={setSeats}
-              labelField="label"
-              valueField="value"
-            />
-          </View>
-          <PaperText variant="titleMedium">Type of Vehicle</PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <Dropdown
-              data={typeOfVehicleData}
-              value={typeOfVehicle}
-              onChange={setTypeOfVehicle}
-              labelField="label"
-              valueField="value"
-            />
-          </View>
+
           <PaperText variant="titleMedium">Vehicle Number</PaperText>
           <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
             <TextInput
               placeholder="Vehicle Number"
               value={vehicleNumber}
               onChangeText={setVehicleNumber}
+              style={styles.textInput}
             />
           </View>
           <PaperText variant="titleMedium">Vehicle Color</PaperText>
           <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
             <Dropdown
               data={vehicleColorData}
               value={vehicleColor}
               onChange={setVehicleColor}
               labelField="label"
               valueField="value"
+              style={styles.dropdown}
             />
           </View>
           <PaperText variant="titleMedium">Start</PaperText>
           <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
             <Dropdown
               data={vehicleColorData}
               value={vehicleColor}
               onChange={setVehicleColor}
               labelField="label"
               valueField="value"
+              style={styles.dropdown}
             />
           </View>
           <PaperText variant="titleMedium">Vehicle Model</PaperText>
           <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
             <Dropdown
               data={vehicleModelData}
               value={vehicleModel}
               onChange={setVehicleModel}
               labelField="label"
               valueField="value"
+              style={styles.dropdown}
             />
           </View>
           <Button mode="contained" onPress={createRide}>
@@ -479,4 +434,4 @@ const CreateRide = ({navigation, route}) => {
   );
 };
 
-export default CreateRide;
+export default AddVehicle;

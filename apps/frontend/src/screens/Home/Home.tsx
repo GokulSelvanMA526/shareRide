@@ -19,19 +19,25 @@ with the following requirements:
 // Path: frontend/shareRide/shareRide/src/screens/Home/Home.tsx
 import React, {useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity, Dimensions} from 'react-native';
-import {Appbar, Button, Divider} from 'react-native-paper';
+import {Appbar, Button, Divider, Menu} from 'react-native-paper';
 import {Card} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Dropdown} from 'react-native-element-dropdown';
 import styles from './Home.styles';
 import {navigate} from '../../navigation/RootNavigator';
+import {useTheme} from 'react-native-paper';
 
 const Home = () => {
   const [value, setValue] = useState('');
+  const [visible, setVisible] = React.useState(false);
   const [isFocus, setIsFocus] = useState(false);
   // const [selectedLocation, setSelectedLocation] = useState(locations[0]);
   const [isReversed, setIsReversed] = useState(false);
   const windowWidth = Dimensions.get('window').width;
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+
+  const {colors} = useTheme();
 
   // Replace this with your actual data
   const pastRides = [
@@ -63,7 +69,20 @@ const Home = () => {
     <View style={{backgroundColor: '#fff'}}>
       <Appbar.Header>
         <Appbar.Content title="Home" />
-        <Appbar.Action icon="dots-vertical" onPress={() => {}} />
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={<Appbar.Action icon="dots-vertical" onPress={openMenu} />}>
+          <Menu.Item onPress={() => {}} title="My Profile" />
+          <Menu.Item
+            onPress={() => {
+              navigate('AddVehicle');
+            }}
+            title="Add Vehicles"
+          />
+          {/* <Divider />
+          <Menu.Item onPress={() => {}} title="Item 3" /> */}
+        </Menu>
       </Appbar.Header>
       <View style={styles.searchArea}>
         {!isReversed ? (
@@ -139,10 +158,11 @@ const Home = () => {
             styles.shuffleIcon,
             {
               top: windowWidth / 13,
+              backgroundColor: colors.primary,
             },
           ]}
           onPress={() => setIsReversed(!isReversed)}>
-          <Icon name="shuffle" size={24} color="black" />
+          <Icon name="shuffle" size={24} color="white" />
         </TouchableOpacity>
         <Button
           mode="contained"

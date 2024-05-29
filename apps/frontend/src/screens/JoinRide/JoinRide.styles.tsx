@@ -5,10 +5,11 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: colors.background,
-    padding: 16,
+    // padding: 16,
   },
   card: {
     marginVertical: 8,
+    marginHorizontal: 16,
     elevation: 2,
     // backgroundColor: colors.surface,
     borderRadius: 8,
