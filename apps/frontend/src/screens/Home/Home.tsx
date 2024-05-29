@@ -162,7 +162,7 @@ const Home = () => {
             },
           ]}
           onPress={() => setIsReversed(!isReversed)}>
-          <Icon name="shuffle" size={24} color="black" />
+          <Icon name="shuffle" size={24} color="white" />
         </TouchableOpacity>
         <Button
           mode="contained"
