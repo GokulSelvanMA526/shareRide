@@ -183,7 +183,13 @@ const Login = () => {
           onPress={handleLogin}>
           Login
         </Button>
-        <Button mode="contained">Sign Up</Button>
+        <Button
+          style={{marginVertical: 5}}
+          mode="contained"
+          onPress={() => navigate('SignUp')}>
+          Sign Up
+        </Button>
+        {/* <Button mode="contained">Sign Up</Button> */}
       </View>
     </View>
   );

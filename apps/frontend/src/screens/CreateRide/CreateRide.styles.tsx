@@ -52,20 +52,25 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,
   },
-  input: {
-    borderWidth: 1,
+  inputSeatsDropdown: {
+    width: '30%',
+    borderWidth: 2,
     borderRadius: 5,
-    padding: 10,
+    paddingHorizontal: 2,
+    paddingVertical: 2,
+    margin: 5,
+  },
+  vehiclesArea: {
     margin: 5,
   },
   Date: {
-    fontSize: 18,
+    margin: 5,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: 'black',
+    width: '70%',
+    // color: 'black',
   },
   button: {
-    backgroundColor: 'blue',
-    padding: 10,
     margin: 5,
     borderRadius: 5,
   },

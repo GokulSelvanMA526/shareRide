@@ -19,7 +19,7 @@ with the following requirements:
 // Path: frontend/shareRide/shareRide/src/screens/Home/Home.tsx
 import React, {useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity, Dimensions} from 'react-native';
-import {Appbar, Button, Divider, Menu} from 'react-native-paper';
+import {Appbar, Avatar, Button, Divider, Menu} from 'react-native-paper';
 import {Card} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -47,9 +47,13 @@ const Home = () => {
   ];
 
   const locations = [
-    {label: 'Location 1', value: '1'},
-    {label: 'Location 2', value: '2'},
-    {label: 'Location 3', value: '3'},
+    {label: 'Tambaram', value: '1'},
+    {label: 'Tambaram Sanatorium', value: '2'},
+    {label: 'Chromepet', value: '3'},
+    {label: 'Vels University', value: '4'},
+    {label: 'S Kolathur', value: '5'},
+    {label: 'Echangadu', value: '6'},
+    {label: 'Kamakshi', value: '7'},
     // ...
   ];
 
@@ -189,29 +193,14 @@ const Home = () => {
           data={pastRides}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <Card
-              style={[
-                styles.item,
-                {
-                  backgroundColor: 'skyblue',
-                  borderColor: 'blue',
-                  borderWidth: 2,
-                },
-              ]}
-              theme={{colors: {primary: 'blue'}}}>
-              <Card.Content>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Icon
-                    name={Math.random() > 0.5 ? 'car' : 'bicycle'}
-                    size={20}
-                    color="#000"
-                  />
-                  <Text style={{fontSize: 23}}>{item.name}</Text>
-                </View>
-                <Text style={styles.date}>{item.date}</Text>
-              </Card.Content>
+            <Card style={[styles.item]}>
+              <Card.Title
+                title={item.id}
+                subtitle={item.name}
+                left={props => <Avatar.Icon {...props} icon="car" />}
+              />
               <Card.Actions>
-                {/* <Button>Cancel</Button> */}
+                <Text>{item.date}</Text>
                 <Button>View Details</Button>
               </Card.Actions>
             </Card>

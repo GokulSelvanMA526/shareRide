@@ -221,6 +221,8 @@ use the following data for error message:
 - error message should be displayed in case of invalid input
 - error message should be displayed in case of api failure
 
+ // create a tile for the list of vehicles added by me or if no vehicles is there then show a button with text create vehicle and on click of that button navigate to create vehicle screen  
+
 
 */
 
@@ -232,7 +234,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {Button} from 'react-native-paper';
+import {Button, Card} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Dropdown} from 'react-native-element-dropdown';
 
@@ -246,6 +248,22 @@ const CreateRide = ({navigation, route}) => {
   const [destination, setDestination] = useState('');
   const [time, setTime] = useState('');
   const [seats, setSeats] = useState(1);
+  const [vehicles, setVehicles] = useState([
+    {
+      id: 1,
+      vehicleNumber: 'TN 01 AB 1234',
+      vehicleModel: 'honda',
+      color: 'blue',
+      type: 'car',
+    },
+    {
+      id: 2,
+      vehicleNumber: 'TN 01 AB 1235',
+      vehicleModel: 'suzuki',
+      color: 'red',
+      type: 'bike',
+    },
+  ]);
   const [typeOfVehicle, setTypeOfVehicle] = useState('car');
   const [vehicleNumber, setVehicleNumber] = useState('');
   const [vehicleColor, setVehicleColor] = useState('red');
@@ -264,11 +282,11 @@ const CreateRide = ({navigation, route}) => {
   console.log('someParameter', someParameter);
 
   const seatsData = [
-    {label: 1, value: 1},
-    {label: 2, value: 2},
-    {label: 3, value: 3},
-    {label: 4, value: 4},
-    {label: 5, value: 5},
+    {label: '1', value: '1'},
+    {label: '2', value: '2'},
+    {label: '3', value: '3'},
+    {label: '4', value: '4'},
+    {label: '5', value: '5'},
   ];
   const typeOfVehicleData = [
     {label: 'car', value: 'car'},
@@ -347,6 +365,9 @@ const CreateRide = ({navigation, route}) => {
     navigate('Home');
   };
 
+  const navigateToCreateVehicle = () => {
+    navigate('AddVehicle');
+  };
   return (
     <ScrollView>
       <Appbar.Header>
@@ -354,33 +375,15 @@ const CreateRide = ({navigation, route}) => {
         <Appbar.Content title="Create Ride" />
       </Appbar.Header>
       <View style={styles.container}>
-        <PaperText variant="titleMedium">
-          Start {} to {}
-        </PaperText>
+        <PaperText variant="titleLarge">Chromepet to CIEC</PaperText>
         <View style={styles.formContainer}>
-          {/* <PaperText variant="titleMedium">
-            Start {} to {}
-          </PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <TextInput
-              placeholder="Source"
-              value={source}
-              onChangeText={setSource}
-            />
-          </View>
-          <PaperText variant="titleMedium">End</PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <TextInput
-              placeholder="Destination"
-              value={destination}
-              onChangeText={setDestination}
-            />
-          </View> */}
           <PaperText variant="titleMedium">Date</PaperText>
           <TouchableOpacity
-            style={{flex: 1, height: 50, backgroundColor: 'lightgrey'}}
+            style={{
+              flex: 1,
+              width: 180,
+              backgroundColor: 'lightgrey',
+            }}
             onPress={() => setOpen(true)}>
             {date ? ( // check if date is valid
               <Text style={styles.Date}>{date.toLocaleString()}</Text>
@@ -404,70 +407,49 @@ const CreateRide = ({navigation, route}) => {
             />
           </TouchableOpacity>
           <PaperText variant="titleMedium">Seats</PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
+          <View>
             <Dropdown
+              style={styles.inputSeatsDropdown}
               data={seatsData}
               value={seats}
               onChange={setSeats}
               labelField="label"
               valueField="value"
+              placeholder="Seats"
             />
           </View>
-          <PaperText variant="titleMedium">Type of Vehicle</PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <Dropdown
-              data={typeOfVehicleData}
-              value={typeOfVehicle}
-              onChange={setTypeOfVehicle}
-              labelField="label"
-              valueField="value"
-            />
+          <View style={styles.vehiclesArea}>
+            <PaperText variant="titleMedium">My Vehicles</PaperText>
           </View>
-          <PaperText variant="titleMedium">Vehicle Number</PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <TextInput
-              placeholder="Vehicle Number"
-              value={vehicleNumber}
-              onChangeText={setVehicleNumber}
-            />
-          </View>
-          <PaperText variant="titleMedium">Vehicle Color</PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <Dropdown
-              data={vehicleColorData}
-              value={vehicleColor}
-              onChange={setVehicleColor}
-              labelField="label"
-              valueField="value"
-            />
-          </View>
-          <PaperText variant="titleMedium">Start</PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <Dropdown
-              data={vehicleColorData}
-              value={vehicleColor}
-              onChange={setVehicleColor}
-              labelField="label"
-              valueField="value"
-            />
-          </View>
-          <PaperText variant="titleMedium">Vehicle Model</PaperText>
-          <View style={styles.input}>
-            <Icon name="alarm" size={20} color="black" />
-            <Dropdown
-              data={vehicleModelData}
-              value={vehicleModel}
-              onChange={setVehicleModel}
-              labelField="label"
-              valueField="value"
-            />
-          </View>
-          <Button mode="contained" onPress={createRide}>
+          {vehicles.length > 0 ? (
+            vehicles.map(vehicle => (
+              <Card key={vehicle.id} style={{height: 150, marginVertical: 10}}>
+                <Card.Title
+                  title={vehicle.vehicleNumber}
+                  subtitle={vehicle.vehicleModel}
+                />
+                <Card.Content>
+                  <Text>{vehicle.color}</Text>
+                </Card.Content>
+                <Card.Actions>
+                  <Icon
+                    name={vehicle.type === 'car' ? 'car' : 'bicycle'}
+                    size={20}
+                    color="#000"
+                  />
+                  <Button>Select</Button>
+                </Card.Actions>
+              </Card>
+            ))
+          ) : (
+            <Button
+              mode="outlined"
+              style={styles.button}
+              onPress={() => navigateToCreateVehicle()}>
+              Create Vehicle
+            </Button>
+          )}
+          <Button mode="contained" style={styles.button} onPress={createRide}>
             Create Ride
           </Button>
           {error ? <Text style={styles.error}>{error}</Text> : null}

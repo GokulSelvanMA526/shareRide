@@ -2,7 +2,6 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'lightgreen',
     flex: 1,
   },
   searchArea: {
@@ -13,7 +12,6 @@ const styles = StyleSheet.create({
   filterArea: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    padding: 10,
   },
   chips: {
     marginRight: 5,
@@ -22,7 +20,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 5,
     borderWidth: 1.5,
-    borderColor: 'white',
     padding: 5,
     borderRadius: 5,
   },
@@ -37,7 +34,6 @@ const styles = StyleSheet.create({
   cardsContainer: {
     flex: 1,
     padding: 6,
-    backgroundColor: 'white',
   },
   card: {
     marginBottom: 10,
@@ -58,9 +54,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: '#007BFF',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    // backgroundColor: '#007BFF',
+    // paddingHorizontal: 10,
+    // paddingVertical: 5,
+    borderRadius: 5,
   },
   buttonText: {
     color: '#fff',
