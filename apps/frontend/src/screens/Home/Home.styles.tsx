@@ -38,14 +38,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   item: {
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    marginHorizontal: 5,
-    marginVertical: 5,
-  },
-  date: {
-    marginTop: 10,
-    alignSelf: 'flex-end',
+    marginHorizontal: 3,
+    marginVertical: 3,
   },
   destinationView: {
     height: 50,
