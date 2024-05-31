@@ -270,7 +270,7 @@ use the following data:
 
 import React, {useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity, ScrollView} from 'react-native';
-import {Appbar, Button, Divider, IconButton} from 'react-native-paper';
+import {Appbar, Avatar, Button, Divider, IconButton} from 'react-native-paper';
 import {Card, Chip, useTheme} from 'react-native-paper';
 import {Dropdown} from 'react-native-element-dropdown';
 import Icon from '../../components/Icon';
@@ -340,6 +340,7 @@ const FindRide = ({route}) => {
   // - start location
   // - end location
   // - start time
+  // - username
 
   const rides = [
     {
@@ -349,9 +350,10 @@ const FindRide = ({route}) => {
       seats: 4,
       typeOfVehicle: 'Car',
       icon: 'car',
-      startLocation: 'Location A',
-      endLocation: 'Location B',
+      startLocation: 'Chrompet',
+      endLocation: 'CIEC',
       startTime: '10:00 AM',
+      userName: 'John Doe',
     },
     {
       id: '2',
@@ -360,9 +362,10 @@ const FindRide = ({route}) => {
       seats: 2,
       typeOfVehicle: 'Motorcycle',
       icon: 'bike',
-      startLocation: 'Location C',
-      endLocation: 'Location D',
+      startLocation: 'Medavakkam',
+      endLocation: 'CIEC',
       startTime: '12:00 PM',
+      userName: 'Jane Doe',
     },
     // Add more rides here
   ];
@@ -479,13 +482,7 @@ const FindRide = ({route}) => {
         <Appbar.Content title="Find Ride" />
       </Appbar.Header>
       <View style={styles.container}>
-        <View
-          style={[
-            styles.searchArea,
-            {
-              backgroundColor: colors.primary,
-            },
-          ]}>
+        <View style={[styles.searchArea]}>
           <Dropdown
             style={styles.dropdown}
             data={filters}
@@ -538,7 +535,7 @@ const FindRide = ({route}) => {
             />
           )}
         </View>
-        <View style={[styles.filterArea, {backgroundColor: colors.primary}]}>
+        <View style={[styles.filterArea]}>
           <Divider />
           {selectedFilterData && renderSelectedFilters()}
           {selectedFilterData.length > 0 && resetButtonComponent()}
@@ -549,9 +546,18 @@ const FindRide = ({route}) => {
             renderItem={({item}) => (
               <Card style={styles.card}>
                 <Card.Title
-                  title={item.name}
+                  title={item.userName}
                   titleVariant="displayMedium"
                   titleStyle={styles.cardTitle}
+                  titleNumberOfLines={2}
+                  left={props => <Avatar.Icon {...props} icon="account" />}
+                  right={props => (
+                    <IconButton
+                      {...props}
+                      icon="bookmark-outline"
+                      onPress={() => {}}
+                    />
+                  )}
                 />
                 <Card.Content>
                   <Text style={styles.cardContent}>
@@ -562,10 +568,12 @@ const FindRide = ({route}) => {
                   </Text>
                 </Card.Content>
                 <Card.Actions style={styles.cardFooter}>
-                  <Icon name="car" size={20} color="black" />
-                  <IconButton icon="bike" size={20} />
+                  {item.typeOfVehicle === 'Car' ? (
+                    <IconButton icon="bike" size={20} />
+                  ) : (
+                    <IconButton icon="car" size={20} />
+                  )}
                   <Text>Seats Available - {item.seats}</Text>
-                  {/* <Text>{item.typeOfVehicle}</Text> */}
                   <Button
                     style={styles.button}
                     onPress={() => handleViewRidePress(item.id)}>
